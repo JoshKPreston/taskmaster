@@ -2,15 +2,19 @@ import { ProxyState } from "../AppState.js"
 import { taskService } from "../Services/TaskService.js";
 
 
+
 export default class TaskController {
   constructor() {
-    console.log('hello from TaskController.js');
+  }
+
+  checkBox(id) {
+    taskService.checkBox(id)
   }
 
   create(e, listID, color) {
     e.preventDefault()
     taskService.create({
-      taskDescription: e.target.title.value,
+      title: e.target.title.value,
       listID,
       color
     })

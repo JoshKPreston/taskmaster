@@ -1,19 +1,68 @@
 import { ProxyState } from "../AppState.js";
 import Task from "../Models/Task.js";
+import "../sweetalert2.all.min.js";
 
-//Public
+
+//Private
+
+
 class TaskService {
   constructor() {
+
+    // let tasks = ProxyState.tasks
+    // tasks.forEach(task => {
+    //   if (task.completed) {
+    //     let checkBoxElem = document.getElementById(`chk_${task.id}`)
+    //     // @ts-ignore
+    //     checkBoxElem.checked = true
+    //   }
+    // })
+
   }
-  create(params) { 
-    ProxyState.tasks = [...ProxyState.tasks, new Task(params)] 
-  }
-  delete(id) { 
+
+  checkBox(id) {
+    let checkBoxElem = document.getElementById(`chk_${id}`)
+    // @ts-ignore
     let task = ProxyState.tasks.find(task => task.id == id)
-    let userConfirmsDelete = window.confirm(`Delete?: ${task.taskDescription}`)
-    if (userConfirmsDelete) {
-      ProxyState.tasks = ProxyState.tasks.filter(task => task.id != id) 
-    }
+    let i = ProxyState.tasks.findIndex(task => task.id == id)
+
+    checkBoxElem.addEventListener('change', () => {
+      // @ts-ignore
+      if (checkBoxElem.checked) {
+        // @ts-ignore
+        swal.fire({
+          title: `Task Completed`,
+          text: `${task.title}`,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          task.completed = true
+          ProxyState.tasks[i] = task
+        })
+      }
+    })
+
+
+  }
+  create(params) {
+    ProxyState.tasks = [...ProxyState.tasks, new Task(params)]
+  }
+  delete(id) {
+    let task = ProxyState.tasks.find(task => task.id == id)
+    document.getElementById(`${task.id}`).addEventListener('click',
+      // @ts-ignore
+      swal.fire({
+        text: `Delete ${task.title}?`,
+        icon: 'warning',
+        confirmButtonText: 'Delete',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel'
+      }).then(isConfirm => {
+        if (isConfirm.value) {
+          ProxyState.tasks = ProxyState.tasks.filter(task => task.id != id)
+        }
+      })
+    )
   }
 }
 export const taskService = new TaskService();

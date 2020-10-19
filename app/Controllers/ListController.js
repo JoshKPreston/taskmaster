@@ -1,6 +1,7 @@
 import { ProxyState } from "../AppState.js"
 import { listService } from "../Services/ListService.js";
 
+
 //Private
 let _draw = () => {
 
@@ -18,7 +19,11 @@ export default class ListController {
     ProxyState.on('lists', _draw)
     ProxyState.on('tasks', _draw)
 
+
     _draw();
+
+    
+
   }
 
   create(e) {
@@ -30,6 +35,8 @@ export default class ListController {
     e.target.reset()
   }
 
-  delete(id) { listService.delete(id) }
+  delete(id) { 
+    listService.delete(id)
+  }
 
 }

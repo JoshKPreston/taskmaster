@@ -1,22 +1,33 @@
 import { ProxyState } from "../AppState.js";
 import List from "../Models/List.js";
+import "../sweetalert2.all.min.js"
+
 
 //Public
 class ListService {
   constructor() {
+
   }
-  create(params) { 
+  create(params) {
     ProxyState.lists = [...ProxyState.lists, new List(params)]
   }
   delete(id) {
-
     let list = ProxyState.lists.find(list => list.id == id)
-    let userConfirmsDelete = window.confirm(`Delete?: ${list.title}`)
-    if (userConfirmsDelete) {
-      ProxyState.lists = ProxyState.lists.filter(list => list.id != id)
-      ProxyState.tasks = ProxyState.tasks.filter(task => task.listID != id)
-    }
-    
+    document.getElementById(`${list.id}`).addEventListener('click',
+      // @ts-ignore
+      swal.fire({
+        text: `Delete ${list.title}?`,
+        icon: 'warning',
+        confirmButtonText: 'Delete',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel'
+      }).then(isConfirm => {
+        if (isConfirm.value) {
+          ProxyState.lists = ProxyState.lists.filter(list => list.id != id)
+          ProxyState.tasks = ProxyState.tasks.filter(task => task.listID != id)
+        }
+      })
+    )
   }
 
 }
