@@ -1,20 +1,24 @@
 import { ProxyState } from "../AppState.js"
 import { taskService } from "../Services/TaskService.js";
 
+
 export default class TaskController {
-  constructor () {
+  constructor() {
     console.log('hello from TaskController.js');
   }
 
-  get Template () {
-    return
-  }
-  
-  create(data) {
-    taskService.create()
+  create(e, listID, color) {
+    e.preventDefault()
+    taskService.create({
+      taskDescription: e.target.title.value,
+      listID,
+      color
+    })
+    e.target.reset()
   }
 
-  delete(data) {
-    taskService.delete()
+  delete(id) {
+    taskService.delete(id)
   }
+
 }

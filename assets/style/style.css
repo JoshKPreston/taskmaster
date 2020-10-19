@@ -1,0 +1,47 @@
+
+* {
+ //outline: 1px solid red;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.navbar{
+  height: 10vh;
+}
+
+.colorPicker {
+  padding: 1vh 2vh;
+}
+
+.form {
+  padding: 0;
+}
+
+.form input, .form button {
+  height: 10vh;
+  font-size: 1.5em;
+}
+
+.form-group {
+  padding: 10px;
+  margin: 0;
+}
+
+h5 {
+  margin: 0;
+}
+
+.list-row {
+  height: 70vh;
+}
+
+.list-div {
+  margin-top: 3vh;
+  padding: 5px;
+}
+
+.task-div{
+  opacity: 0.7;
+}

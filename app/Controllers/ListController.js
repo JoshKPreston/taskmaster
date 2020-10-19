@@ -2,31 +2,34 @@ import { ProxyState } from "../AppState.js"
 import { listService } from "../Services/ListService.js";
 
 //Private
-function _drawLists() {
+let _draw = () => {
 
   let template = ''
-  ProxyState.lists.forEach(l => template += l.ListTemplate)
-  document.getElementById("lists").innerHTML = template
+  ProxyState.lists.forEach(list => template += list.Template)
+  document.getElementById('lists').innerHTML = template
 
- }
+}
 
-//Public
+
 export default class ListController {
   constructor() {
     console.log('hello from ListController.js');
 
-    ProxyState.on('lists', _drawLists)
+    ProxyState.on('lists', _draw)
+    ProxyState.on('tasks', _draw)
 
-    _drawLists();
+    _draw();
   }
 
-  create(data) {
-    listService.create(data)
+  create(e) {
+    e.preventDefault()
+    listService.create({
+      title: e.target.title.value,
+      color: e.target.color.value
+    })
+    e.target.reset()
   }
 
-  delete(data) {
-    listService.delete()
-  }
-  
-    
+  delete(id) { listService.delete(id) }
+
 }
